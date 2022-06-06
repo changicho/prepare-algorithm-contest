@@ -46,8 +46,6 @@ public class C1 {
             if (!hasSpecial) {
                 result += '#';
             }
-            //1111234567
-            //1111234567@Rc
             if (result.length() < 7) {
                 while (result.length() < 7) {
                     result += 'a';

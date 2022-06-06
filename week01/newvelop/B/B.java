@@ -1,57 +1,22 @@
-#include <algorithm>
-#include <iostream>
-#include <unordered_map>
-#include <vector>
+package codeforce.y2022.d0516_0522;
 
-using namespace std;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
-unordered_map<string, int> indexes;
-
-// time : O(650)
-// space : O(650)
-void init() {
-  char first = 'a';
-  char second = 'a';
-
-  for (int index = 1; index <= 650; index++) {
-    second++;
-    if (second > 'z') {
-      second = 'a';
-      first++;
+public class c_1674b {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int count = Integer.parseInt(br.readLine());
+        for (int i = 0; i < count; i++) {
+            String s = br.readLine();
+            int temp = (s.charAt(0) - 'a') * 25;
+            if (s.charAt(0) < s.charAt(1)) {
+                temp += s.charAt(1) - 'a';
+            } else {
+                temp += s.charAt(1) - 'a' + 1;
+            }
+            System.out.println(temp);
+        }
     }
-
-    while (first == second) {
-      second++;
-
-      if (second > 'z') {
-        second = 'a';
-        first++;
-
-        if (first > 'z') break;
-      }
-    }
-
-    indexes[{first, second}] = index;
-  }
-}
-
-int solution(string &word) { return indexes[word]; }
-
-int main() {
-  std::ios_base::sync_with_stdio(false);
-  init();
-
-  int T;
-  cin >> T;
-
-  for (int t = 0; t < T; t++) {
-    string word;
-    cin >> word;
-
-    int res = solution(word);
-
-    cout << res << "\n";
-  }
-
-  return 0;
 }
