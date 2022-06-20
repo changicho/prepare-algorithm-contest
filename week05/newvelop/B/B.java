@@ -1,26 +1,24 @@
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Arrays;
+import java.util.*;
 
-public class A {
+public class B {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        int total = Integer.parseInt(br.readLine());
-        for (int t = 0; t < total; t++) {
+        int tcase = Integer.parseInt(br.readLine());
+        for (int t = 0; t < tcase; t++) {
             br.readLine();
             int[] arr = Arrays.stream(br.readLine().split(" ")).mapToInt(Integer::parseInt).toArray();
-            int odd = 0;
-            int even = 0;
+            Set<Integer> set = new HashSet<>();
             for (int n : arr) {
-                if (n % 2 == 0) {
-                    even++;
-                } else {
-                    odd++;
-                }
+                set.add(n);
             }
-            System.out.println(Math.min(odd, even));
+            if ((arr.length - set.size()) % 2 == 0) {
+                System.out.println(set.size());
+            } else {
+                System.out.println(set.size() - 1);
+            }
         }
     }
 }
