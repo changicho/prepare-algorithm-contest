@@ -12,9 +12,7 @@
 
 using namespace std;
 
-// time :
-long long solution(int s) { return 0; }
-
+// time : 20min
 string table[46] = {
     "",
 };
@@ -42,10 +40,6 @@ int main() {
   cout.tie(NULL);
 
   recursive(1, 0, "");
-
-  // for (int i = 1; i <= 45; i++) {
-  //   cout << i << " " << table[i] << endl;
-  // }
 
   freopen("./input.txt", "r", stdin);
 

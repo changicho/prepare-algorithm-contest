@@ -12,12 +12,12 @@
 
 using namespace std;
 
-// time :
+// time : 5min
 int solution(int n, vector<int> &a) {
   int answer = 0;
 
-  map<int, int> counts;
-  set<int> needToErase;
+  unordered_map<int, int> counts;
+  unordered_set<int> needToErase;
   for (int &num : a) {
     counts[num]++;
 

@@ -12,17 +12,7 @@
 
 using namespace std;
 
-// time :
-// 0 : 0
-// 1 : 2 4 8 6 ...
-// 2 : 2 4 8 6 ...
-// 3 : 2 4 8 6 ...
-// 4 : 2 4 8 6 ...
-// 5 : 0 ...
-// 6 : 2 4 8 6 ...
-// 7 : 2 4 8 6 ...
-// 8 : 2 4 8 6 ...
-// 9 : 2 4 8 6 ...
+// time : 40min
 bool solution(int n, vector<int> &arr) {
   if (n == 1) return true;
 
@@ -55,27 +45,18 @@ bool solution(int n, vector<int> &arr) {
     return nums.size() == 1;
   }
 
-  set<int> groupA, groupB;
+  set<int> group;
   for (int &two : twos) {
     int key = (two / 10) % 2;
-    if (two % 10 == 6 || two % 10 == 3) {
-      groupB.insert(key);
-    } else {
-      if (two % 10 == 7 || two % 10 == 9) {
-        key++;
-        key %= 2;
-      }
-      groupA.insert(key);
+
+    if (two % 10 == 7 || two % 10 == 9 || two % 10 == 6 || two % 10 == 3) {
+      key++;
+      key %= 2;
     }
+    group.insert(key);
   }
 
-  if (groupA.size() == 2 || groupB.size() == 2) return false;
-
-  if (groupA.size() > 0 && groupB.size() == 0) return true;
-  if (groupA.size() == 0 && groupB.size() > 0) return true;
-
-  if (groupA.count(1) && groupB.count(1)) return false;
-  if (groupA.count(0) && groupB.count(0)) return false;
+  if (group.size() == 2) return false;
 
   return true;
 }
