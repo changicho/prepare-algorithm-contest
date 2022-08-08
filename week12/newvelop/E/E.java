@@ -1,87 +1,98 @@
-#include <algorithm>
-#include <cmath>
-#include <iostream>
-#include <map>
-#include <queue>
-#include <set>
-#include <stack>
-#include <string>
-#include <unordered_map>
-#include <unordered_set>
-#include <vector>
 
-using namespace std;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.*;
 
-// time : 40min
-bool solution(int n, vector<int> &arr) {
-  if (n == 1) return true;
+public class Main {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int tcase = Integer.parseInt(br.readLine());
+        for (int t = 1; t <= tcase; t++) {
+            br.readLine();
+            int[] arr = Arrays.stream(br.readLine().split(" ")).mapToInt(Integer::parseInt).toArray();
 
-  sort(arr.begin(), arr.end());
-  vector<int> zeros;
-  vector<int> fives;
-  vector<int> twos;
+            if (arr.length == 1) {
+                System.out.println("YES");
+                continue;
+            }
 
-  for (int &n : arr) {
-    if (n % 10 == 0) {
-      zeros.push_back(n);
-    } else if (n % 10 == 5) {
-      fives.push_back(n);
-    } else {
-      twos.push_back(n);
+            Map<Integer, Integer> map = new HashMap<>();
+            //key 는 mod 숫자, value 는 십의자리 숫자 / 2 한것. 싸이클이 20 주기로 이뤄지기 때문
+            map.put(6, -1);
+            map.put(2, -1);
+            map.put(4, -1);
+            map.put(8, -1);
+
+
+            boolean flag = true;
+            boolean hasFiveOrZero = arr[0] % 5 == 0;
+
+            for (int i = 0; i < arr.length; i++) {
+                int n = arr[i];
+                int startMod = n % 10;
+                if (startMod == 5) {
+                    if (!hasFiveOrZero) {
+                        flag = false;
+                        break;
+                    }
+                    if (i < arr.length - 1) {
+                        if (!(arr[i] == arr[i + 1] || arr[i] + 5 == arr[i + 1])) {
+                            flag = false;
+                            break;
+                        }
+                    } else {
+                        if (!(arr[i] == arr[i - 1] || arr[i] + 5 == arr[i - 1])) {
+                            flag = false;
+                            break;
+                        }
+                    }
+                } else if (startMod == 0) {
+                    if (!hasFiveOrZero) {
+                        flag = false;
+                        break;
+                    }
+                    if (i < arr.length - 1) {
+                        if (!(arr[i] == arr[i + 1] || arr[i] == arr[i + 1] + 5)) {
+                            flag = false;
+                            break;
+                        }
+                    } else {
+                        if (!(arr[i] == arr[i - 1] || arr[i] == arr[i - 1] + 5)) {
+                            flag = false;
+                            break;
+                        }
+                    }
+                } else {
+                    if (hasFiveOrZero) {
+                        flag = false;
+                        break;
+                    }
+                    if (i == 0) {
+                        int mod = n;
+                        while (!map.containsKey(mod % 10) || map.get(mod % 10) == -1) {
+                            map.put(mod % 10, mod / 10 % 2);
+                            mod = mod + mod % 10;
+                        }
+                    } else {
+                        int mod = n;
+                        while (!map.containsKey(mod % 10)) {
+                            mod = mod + mod % 10;
+                        }
+                        int value = map.get(mod % 10);
+                        if (value != mod / 10 % 2) {
+                            flag = false;
+                            break;
+                        }
+                    }
+                }
+            }
+
+            if (flag) {
+                System.out.println("YES");
+            } else {
+                System.out.println("NO");
+            }
+        }
     }
-  }
-
-  if (!zeros.empty() || !fives.empty()) {
-    if (!twos.empty()) return false;
-
-    set<int> nums;
-    for (int &zero : zeros) {
-      nums.insert(zero);
-    }
-    for (int &five : fives) {
-      nums.insert(five + 5);
-    }
-
-    return nums.size() == 1;
-  }
-
-  set<int> group;
-  for (int &two : twos) {
-    int key = (two / 10) % 2;
-
-    if (two % 10 == 7 || two % 10 == 9 || two % 10 == 6 || two % 10 == 3) {
-      key++;
-      key %= 2;
-    }
-    group.insert(key);
-  }
-
-  if (group.size() == 2) return false;
-
-  return true;
-}
-
-int main() {
-  ios_base ::sync_with_stdio(false);
-  cin.tie(NULL);
-  cout.tie(NULL);
-
-  freopen("./input.txt", "r", stdin);
-
-  int T;
-  cin >> T;
-  for (int testCase = 1; testCase <= T; testCase++) {
-    int N;
-    cin >> N;
-
-    vector<int> A(N);
-    for (int i = 0; i < N; i++) {
-      cin >> A[i];
-    }
-
-    bool answer = solution(N, A);
-    cout << (answer ? "Yes" : "No") << "\n";
-  }
-
-  return 0;
 }

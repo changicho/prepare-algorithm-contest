@@ -1,78 +1,65 @@
-#include <algorithm>
-#include <cmath>
-#include <iostream>
-#include <map>
-#include <queue>
-#include <set>
-#include <stack>
-#include <string>
-#include <unordered_map>
-#include <unordered_set>
-#include <vector>
 
-using namespace std;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 
-// time :
-vector<pair<int, int>> solution(string &t, vector<string> &s) {
-  int length = t.length();
-
-  vector<pair<int, int>> answer;
-
-  int left = -1, right = 0, index = 0;
-  while (index < length) {
-    int tempR = -1, tempL = -1, sIndex = 0;
-
-    for (int from = left + 1; from <= right; from++) {
-      for (int i = 0; i < s.size(); i++) {
-        if (t.substr(from, s[i].size()) != s[i]) continue;
-
-        int to = from + s[i].size();
-        if (tempR < to) {
-          tempL = from, tempR = to;
-          sIndex = i;
+public class D {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int tcase = Integer.parseInt(br.readLine());
+        for (int t = 1; t <= tcase; t++) {
+            String s = br.readLine();
+            int count = Integer.parseInt(br.readLine());
+            List<String> list = new ArrayList<>();
+            for (int i = 0; i < count; i++) {
+               list.add(br.readLine());
+            }
+            int next = 0;
+            int result = 0;
+            List<Integer[]> resultList = new ArrayList<>();
+            boolean flag = true;
+            while (next < s.length()) {
+                int tempMax = 0;
+                int tempIndex = 0;
+                int tempStartIndex = 0;
+                for (int i = 0; i < list.size(); i++) {
+                    String temp = list.get(i);
+                    int tempNext = next;
+                    while (tempNext >= 0 && tempNext + temp.length() > next) {
+                        int index = s.indexOf(temp, tempNext);
+                        if (index == tempNext) {
+                            if (index + temp.length() > tempMax) {
+                                tempMax = index + temp.length();
+                                tempIndex = i + 1;
+                                tempStartIndex = index + 1;
+                            }
+                            break;
+                        } else {
+                            tempNext --;
+                        }
+                    }
+                }
+                if (tempMax == 0) {
+                    System.out.println(-1);
+                    flag = false;
+                    break;
+                } else {
+                    next = tempMax;
+                    result++;
+                    Integer[] intArr = new Integer[2];
+                    intArr[0] = tempIndex;
+                    intArr[1] = tempStartIndex;
+                    resultList.add(intArr);
+                }
+            }
+            if (flag) {
+                System.out.println(result);
+                for (Integer[] tempArr : resultList) {
+                    System.out.println(tempArr[0] + " " + tempArr[1]);
+                }
+            }
         }
-      }
     }
-    if (tempR == -1) return {};
-
-    answer.push_back({sIndex, tempL});
-    left = tempL, right = tempR;
-    index = right;
-  }
-
-  return answer;
-}
-
-int main() {
-  ios_base ::sync_with_stdio(false);
-  cin.tie(NULL);
-  cout.tie(NULL);
-
-  freopen("./input.txt", "r", stdin);
-
-  int T;
-  cin >> T;
-  for (int testCase = 1; testCase <= T; testCase++) {
-    string T;
-    int N;
-    cin >> T >> N;
-
-    vector<string> S(N);
-    for (int i = 0; i < N; i++) {
-      cin >> S[i];
-    }
-
-    vector<pair<int, int>> answer = solution(T, S);
-
-    if (answer.size() == 0) {
-      cout << "-1\n";
-    } else {
-      cout << answer.size() << "\n";
-      for (pair<int, int> d : answer) {
-        cout << d.first + 1 << " " << d.second + 1 << "\n";
-      }
-    }
-  }
-
-  return 0;
 }
