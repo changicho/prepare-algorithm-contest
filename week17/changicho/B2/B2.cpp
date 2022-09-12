@@ -19,17 +19,10 @@ struct Axis {
   int y, x;
 };
 
-// |p - a1|^2 + |p - a2|^2 + ...
-
-//   p^2 - 2 * p(a1) + a1^2
-// + p^2 - 2 * p(a2) + a2^2 + ...
-
-// sum(p^2) - 2 * p(a1 + a2 ...) + a1^2 + a2^2 ...
-
 int solution(int n, int q, vector<Axis> &trees, vector<Axis> &waters) {
   long long answer = 0;
 
-  map<int, int> treeXs, treeYs, waterXs, waterYs;
+  unordered_map<int, int> treeXs, treeYs, waterXs, waterYs;
   long long treeXSum = 0, treeYSum = 0;
   long long treeXSquareSum = 0, treeYSquareSum = 0;
 
@@ -53,6 +46,7 @@ int solution(int n, int q, vector<Axis> &trees, vector<Axis> &waters) {
     waterYs[water.y]++;
   }
 
+  // calculate y
   for (auto &it1 : waterYs) {
     long long wy = it1.first;
     int count = it1.second;
@@ -70,6 +64,7 @@ int solution(int n, int q, vector<Axis> &trees, vector<Axis> &waters) {
     answer %= MOD;
   }
 
+  // calculate x
   for (auto &it1 : waterXs) {
     long long wx = it1.first;
     int count = it1.second;

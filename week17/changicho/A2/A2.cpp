@@ -34,17 +34,11 @@ bool check(vector<int> &cards, vector<int> &toBe, int start, int k) {
 }
 
 bool solution(int size, int k, vector<int> &cards, vector<int> &toBe) {
-  if (k == 0) {
-    for (int i = 0; i < size; i++) {
-      if (cards[i] != toBe[i]) return false;
-    }
-    return true;
-  }
-
   for (int i = 0; i < size; i++) {
     toBe.push_back(toBe[i]);
   }
 
+  // use KMP
   vector<int> patternIndexArr(size, 0);
   for (int curIdx = 1, patternIdx = 0; curIdx < size; curIdx++) {
     while (patternIdx > 0 && cards[curIdx] != cards[patternIdx]) {

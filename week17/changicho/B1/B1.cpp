@@ -19,13 +19,6 @@ struct Axis {
   int y, x;
 };
 
-// |p - a1|^2 + |p - a2|^2 + ...
-
-//   p^2 - 2 * p(a1) + a1^2
-// + p^2 - 2 * p(a2) + a2^2 + ...
-
-// sum(p^2) - 2 * p(a1 + a2 ...) + a1^2 + a2^2 ...
-
 int getLength(Axis &a, Axis &b) {
   long long yDiff = abs(a.y - b.y);
   long long xDiff = abs(a.x - b.x);
@@ -51,6 +44,7 @@ int solution(int n, int q, vector<Axis> &trees, vector<Axis> &waters) {
     waterYs[water.y]++;
   }
 
+  // calculate y
   for (int wy = 0; wy <= 3000; wy++) {
     if (waterYs[wy] == 0) continue;
 
@@ -66,6 +60,7 @@ int solution(int n, int q, vector<Axis> &trees, vector<Axis> &waters) {
     }
   }
 
+  // calculate x
   for (int wx = 0; wx <= 3000; wx++) {
     if (waterXs[wx] == 0) continue;
 
