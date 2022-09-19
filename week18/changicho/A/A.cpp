@@ -23,23 +23,6 @@ struct Model {
   }
 };
 
-int getDiffs(vector<int> &a, vector<int> &b) {
-  unordered_map<int, int> count;
-  for (int &num : a) {
-    count[num]++;
-  }
-  for (int &num : b) {
-    count[num]--;
-  }
-  // vector<int> diffs;
-  // return diffs;
-  int diff = 0;
-  for (auto &it : count) {
-    diff += abs(it.second);
-  }
-  return diff / 2;
-}
-
 int solution(int n, int m, vector<int> &s, vector<vector<int>> &p) {
   vector<Model> models(m);
   for (int i = 0; i < m; i++) {
@@ -81,11 +64,6 @@ int solution(int n, int m, vector<int> &s, vector<vector<int>> &p) {
         colorCount.erase(color);
       }
     }
-
-    // for (Model &model : models) {
-    //   cout << model.color << ":" << model.changeCount << " ";
-    // }
-    // cout << endl;
   }
 
   int answer = 0;
