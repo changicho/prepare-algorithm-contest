@@ -12,29 +12,24 @@
 
 using namespace std;
 
-// time :
+// time : 50min
 // left ~ mid, mid + 1 ~ right
 bool isAlmostPalin(vector<vector<int>> &subArraySums, int left, int mid,
                    int right) {
   vector<int> leftCount(256, 0), rightCount(256, 0);
 
   leftCount = subArraySums[mid];
-  for (int i = 0; i < 256; i++) {
+  for (int i = 0; i < 26; i++) {
     leftCount[i] -= subArraySums[left - 1][i];
   }
 
   rightCount = subArraySums[right];
-  for (int i = 0; i < 256; i++) {
+  for (int i = 0; i < 26; i++) {
     rightCount[i] -= subArraySums[mid][i];
   }
 
-  // for (int i = 'a'; i <= 'z'; i++) {
-  //   cout << (char)i << " " << leftCount[i] << ":" << rightCount[i] << endl;
-  // }
-  // cout << endl;
-
   int diffCount = 0;
-  for (int i = 0; i < 256; i++) {
+  for (int i = 0; i < 26; i++) {
     diffCount += abs(leftCount[i] - rightCount[i]);
   }
   if (diffCount == 1) return true;
@@ -43,11 +38,11 @@ bool isAlmostPalin(vector<vector<int>> &subArraySums, int left, int mid,
 
 int solution(string &s, vector<pair<int, int>> queries) {
   int size = s.size();
-  vector<vector<int>> subArraySums(size + 1, vector<int>(256, 0));
+  vector<vector<int>> subArraySums(size + 1, vector<int>(26, 0));
 
   for (int i = 0; i < size; i++) {
     subArraySums[i + 1] = subArraySums[i];
-    subArraySums[i + 1][s[i]]++;
+    subArraySums[i + 1][s[i] - 'a']++;
   }
 
   int answer = 0;
@@ -56,7 +51,6 @@ int solution(string &s, vector<pair<int, int>> queries) {
 
     if ((right - left + 1) % 2 == 0) continue;
 
-    // 1 2 3 4 5 6, 7 8 9 10 11
     int mid = (left + right) / 2;
 
     if (isAlmostPalin(subArraySums, left, mid - 1, right) ||
