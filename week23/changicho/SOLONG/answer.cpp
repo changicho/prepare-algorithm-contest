@@ -14,7 +14,7 @@ class Trie {
         NULL,
     };
     bool isEnd = false;
-    vector<string> branches;
+    string branch = "";
   };
 
   TrieNode* root = new TrieNode;
@@ -30,7 +30,9 @@ class Trie {
         cur->children[c - 'A'] = new TrieNode;
       }
       cur = cur->children[c - 'A'];
-      cur->branches.push_back(word);
+      if (cur->branch == "") {
+        cur->branch = word;
+      }
     }
 
     cur->isEnd = true;
@@ -45,7 +47,7 @@ class Trie {
       cur = cur->children[c - 'A'];
       depth++;
 
-      if (cur->branches.front() == word) {
+      if (cur->branch == word) {
         ret = min(ret, depth + 1);
       }
     }
