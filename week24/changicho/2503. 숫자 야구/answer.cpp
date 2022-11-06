@@ -35,11 +35,11 @@ int main() {
   cin >> N;
 
   vector<Expect> expects(N);
-  int answer = 0;
   for (int i = 0; i < N; i++) {
     cin >> expects[i].number >> expects[i].strike >> expects[i].ball;
   }
 
+  int answer = 0;
   for (int number = 111; number <= 999; number++) {
     string target = to_string(number);
     if (hasZero(target)) continue;
@@ -71,7 +71,6 @@ int main() {
     }
 
     if (allPass) {
-      // cout << number << endl;
       answer++;
     }
   }
