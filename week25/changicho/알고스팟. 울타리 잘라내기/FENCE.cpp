@@ -17,10 +17,9 @@ int recursive(int left, int right, vector<int> &trees) {
   int mid = left + (right - left) / 2;
 
   int ret = max(recursive(left, mid, trees), recursive(mid + 1, right, trees));
-  int lo = mid, hi = mid + 1;
-
-  int height = min(trees[lo], trees[hi]);
-  ret = max(ret, height * 2);
+  int lo = mid, hi = mid;
+  int height = trees[mid];
+  ret = max(ret, height);
 
   while (left < lo || hi < right) {
     if (hi < right && (lo == left || trees[lo - 1] < trees[hi + 1])) {
