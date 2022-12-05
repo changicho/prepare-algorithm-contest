@@ -13,9 +13,11 @@
 
 using namespace std;
 
-int getScore(int start, int end, vector<int> &sum, vector<int> &sqSum) {
-  int tmpSum = sum[end] - (start == 0 ? 0 : sum[start - 1]);
-  int tmpSq = sqSum[end] - (start == 0 ? 0 : sqSum[start - 1]);
+int getScore(int start, int end, vector<int> &prefixSums,
+             vector<int> &prefixSquareSums) {
+  int tmpSum = prefixSums[end] - (start == 0 ? 0 : prefixSums[start - 1]);
+  int tmpSq =
+      prefixSquareSums[end] - (start == 0 ? 0 : prefixSquareSums[start - 1]);
 
   int mid = int(0.5 + (double)tmpSum / (end - start + 1));
 
@@ -24,40 +26,41 @@ int getScore(int start, int end, vector<int> &sum, vector<int> &sqSum) {
   return res;
 }
 
-int recursive(int start, int part, vector<vector<int>> &dp, vector<int> &sum,
-              vector<int> &sqSum) {
-  int size = sum.size();
+int recursive(int index, int part, vector<vector<int>> &dp,
+              vector<int> &prefixSums, vector<int> &prefixSquareSums) {
+  int size = prefixSums.size();
 
-  if (start == size) return 0;
+  if (index == size) return 0;
   if (part == 0) return 1e9;
 
-  if (dp[start][part] != -1) return dp[start][part];
-  dp[start][part] = 1e9;
-  for (int i = 1; i + start <= size; i++) {
-    int curScore = recursive(start + i, part - 1, dp, sum, sqSum) +
-                   getScore(start, start + i - 1, sum, sqSum);
+  if (dp[index][part] != -1) return dp[index][part];
+  dp[index][part] = 1e9;
+  for (int i = 1; i + index <= size; i++) {
+    int curScore =
+        recursive(index + i, part - 1, dp, prefixSums, prefixSquareSums) +
+        getScore(index, index + i - 1, prefixSums, prefixSquareSums);
 
-    dp[start][part] = min(dp[start][part], curScore);
+    dp[index][part] = min(dp[index][part], curScore);
   }
-  return dp[start][part];
+  return dp[index][part];
 }
 
-long long solution(vector<int> &nums, int variety) {
+long long solution(vector<int> &nums, int parts) {
   int size = nums.size();
 
-  vector<int> sum(size, 0), sqSum(size, 0);
-  vector<vector<int>> dp(size, vector<int>(variety + 1, -1));
+  vector<int> prefixSums(size, 0), prefixSquareSums(size, 0);
+  vector<vector<int>> dp(size, vector<int>(parts + 1, -1));
 
   sort(nums.begin(), nums.end());
-  sum[0] = nums[0];
-  sqSum[0] = nums[0] * nums[0];
+  prefixSums[0] = nums[0];
+  prefixSquareSums[0] = nums[0] * nums[0];
 
   for (int i = 1; i < size; i++) {
-    sum[i] = (sum[i - 1] + nums[i]);
-    sqSum[i] = sqSum[i - 1] + (nums[i] * nums[i]);
+    prefixSums[i] = (prefixSums[i - 1] + nums[i]);
+    prefixSquareSums[i] = prefixSquareSums[i - 1] + (nums[i] * nums[i]);
   }
 
-  int answer = recursive(0, variety, dp, sum, sqSum);
+  int answer = recursive(0, parts, dp, prefixSums, prefixSquareSums);
   return answer;
 }
 
