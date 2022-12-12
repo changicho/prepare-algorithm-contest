@@ -31,12 +31,12 @@ int solution(int totalSize) {
   for (int size = 1; size <= totalSize; size++) {
     for (int curLength = 1; curLength <= size; curLength++) {
       for (int nextLength = 1; nextLength <= size - curLength; nextLength++) {
-        int add = nextLength + curLength - 1;
+        int curCount = nextLength + curLength - 1;
 
-        add *= dp[size - curLength][nextLength];
-        add %= MOD;
+        curCount *= dp[size - curLength][nextLength];
+        curCount %= MOD;
 
-        dp[size][curLength] += add;
+        dp[size][curLength] += curCount;
         dp[size][curLength] %= MOD;
       }
     }

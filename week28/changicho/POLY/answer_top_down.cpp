@@ -26,12 +26,12 @@ int recursive(int size, int curLength) {
 
   int ret = 0;
   for (int nextLength = 1; nextLength <= size - curLength; nextLength++) {
-    int add = nextLength + curLength - 1;
+    int curCount = nextLength + curLength - 1;
 
-    add *= recursive(size - curLength, nextLength);
-    add %= MOD;
+    curCount *= recursive(size - curLength, nextLength);
+    curCount %= MOD;
 
-    ret += add;
+    ret += curCount;
     ret %= MOD;
   }
 
