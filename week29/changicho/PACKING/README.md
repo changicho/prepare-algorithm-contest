@@ -1,10 +1,10 @@
-# 알고스팟.
+# 알고스팟. 여행 짐 싸기
 
-[링크](https://www.algospot.com/judge/problem/read/)
+[링크](https://www.algospot.com/judge/problem/read/PACKING)
 
 | 정답률 |
 | :----: |
-|        |
+|  30%   |
 
 ## 설계
 
