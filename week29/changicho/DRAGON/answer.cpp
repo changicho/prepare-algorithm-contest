@@ -13,10 +13,47 @@
 
 using namespace std;
 
-int solution(int N) {
-  int answer = 0;
+const int MAX = 1e9 + 1;
 
+int lengths[51] = {
+    0,
+};
+
+char expand(const string &dragonCurve, int generation, int position) {
+  if (generation == 0) return dragonCurve[position];
+
+  for (char c : dragonCurve) {
+    if (c == 'X' || c == 'Y') {
+      if (position >= lengths[generation]) {
+        position -= lengths[generation];
+        continue;
+      }
+
+      string next = c == 'X' ? "X+YF" : "FX-Y";
+
+      return expand(next, generation - 1, position);
+    } else if (position > 0) {
+      position--;
+    } else {
+      return c;
+    }
+  }
+  return '?';
+}
+
+string solution(int generation, int position, int length) {
+  string answer = "";
+  for (int i = 0; i < length; i++) {
+    answer += expand("FX", generation, (position - 1) + i);
+  }
   return answer;
+}
+
+void init() {
+  lengths[0] = 1;
+  for (int i = 1; i <= 50; i++) {
+    lengths[i] = min(MAX, lengths[i - 1] * 2 + 2);
+  }
 }
 
 int main() {
@@ -28,16 +65,18 @@ int main() {
   // cout << fixed;
   // cout.precision(8);
 
+  init();
+
   freopen("./input.txt", "r", stdin);
 
   int C;
   cin >> C;
 
   for (int testCase = 1; testCase <= C; testCase++) {
-    int N;
-    cin >> N;
+    int N, P, L;
+    cin >> N >> P >> L;
 
-    int answer = solution(N);
+    string answer = solution(N, P, L);
     cout << answer;
     cout << "\n";
   }

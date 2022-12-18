@@ -1,10 +1,10 @@
-# 알고스팟.
+# 알고스팟. 드래곤 커브
 
-[링크](https://www.algospot.com/judge/problem/read/)
+[링크](https://algospot.com/judge/problem/read/DRAGON)
 
 | 정답률 |
 | :----: |
-|        |
+|  60%   |
 
 ## 설계
 
