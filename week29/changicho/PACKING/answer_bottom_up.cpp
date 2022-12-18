@@ -19,11 +19,6 @@ struct Stuff {
   int value;
 };
 
-struct Status {
-  int totalValue;
-  vector<int> indexes;
-};
-
 struct Data {
   int totalValue;
   vector<string> stuffs;
@@ -32,31 +27,31 @@ struct Data {
 Data solution(vector<Stuff> &stuffs, int totalWeight) {
   int size = stuffs.size();
 
-  vector<vector<Status>> dp(size + 1, vector<Status>(totalWeight + 1));
+  vector<vector<int>> dp(size + 1, vector<int>(totalWeight + 1, 0));
 
   for (int i = 1; i <= size; i++) {
     for (int w = 1; w <= totalWeight; w++) {
       Stuff stuff = stuffs[i - 1];
 
       if (w - stuff.weight >= 0) {
-        int nextValue = dp[i - 1][w - stuff.weight].totalValue + stuff.value;
-
-        if (nextValue >= dp[i - 1][w].totalValue) {
-          dp[i][w].totalValue = nextValue;
-          dp[i][w].indexes = dp[i - 1][w - stuff.weight].indexes;
-          dp[i][w].indexes.push_back(i - 1);
-          continue;
-        }
+        int nextValue = dp[i - 1][w - stuff.weight] + stuff.value;
+        dp[i][w] = max(dp[i - 1][w], nextValue);
+        continue;
       }
       dp[i][w] = dp[i - 1][w];
     }
   }
 
-  Data ret;
-  ret.totalValue = dp.back().back().totalValue;
-  for (int &idx : dp.back().back().indexes) {
-    ret.stuffs.push_back(stuffs[idx].name);
+  // reconstruct
+  vector<string> answerStuffs;
+  for (int i = size, w = totalWeight; i >= 1 && w >= 1; i--) {
+    if (dp[i][w] == dp[i - 1][w]) continue;
+    answerStuffs.push_back(stuffs[i - 1].name);
+
+    w -= stuffs[i - 1].weight;
   }
+
+  Data ret = {dp.back().back(), answerStuffs};
   return ret;
 }
 
