@@ -28,7 +28,7 @@ int pack(int leftWeight, int index, vector<vector<int>> &dp,
          vector<Stuff> &stuffs) {
   int size = stuffs.size();
 
-  if (index == size) return 0;
+  if (index == size + 1) return 0;
   int &res = dp[leftWeight][index];
   if (res != -1) return res;
 
@@ -43,16 +43,16 @@ int pack(int leftWeight, int index, vector<vector<int>> &dp,
 }
 
 void reconstruct(int leftWeight, int index, vector<vector<int>> &dp,
-                 vector<Stuff> &stuffs, vector<string> &ans) {
+                 vector<Stuff> &stuffs, vector<string> &answerStuffs) {
   int size = stuffs.size();
   if (index == size) return;
 
-  if (pack(leftWeight, index, dp, stuffs) ==
-      pack(leftWeight, index + 1, dp, stuffs)) {
-    reconstruct(leftWeight, index + 1, dp, stuffs, ans);
+  if (dp[leftWeight][index] == dp[leftWeight][index + 1]) {
+    reconstruct(leftWeight, index + 1, dp, stuffs, answerStuffs);
   } else {
-    ans.push_back(stuffs[index].name);
-    reconstruct(leftWeight - stuffs[index].weight, index + 1, dp, stuffs, ans);
+    answerStuffs.push_back(stuffs[index].name);
+    reconstruct(leftWeight - stuffs[index].weight, index + 1, dp, stuffs,
+                answerStuffs);
   }
 }
 
@@ -62,6 +62,7 @@ Data solution(vector<Stuff> &stuffs, int totalWeight) {
   vector<string> answerStuffs;
   vector<vector<int>> dp(totalWeight + 1, vector<int>(size + 1, -1));
 
+  pack(totalWeight, 1, dp, stuffs);
   reconstruct(totalWeight, 1, dp, stuffs, answerStuffs);
 
   Data ret = {dp[totalWeight][1], answerStuffs};

@@ -54,11 +54,9 @@ Data solution(vector<Stuff> &stuffs, int totalWeight) {
 
   Data ret;
   ret.totalValue = dp.back().back().totalValue;
-
   for (int &idx : dp.back().back().indexes) {
     ret.stuffs.push_back(stuffs[idx].name);
   }
-
   return ret;
 }
 
