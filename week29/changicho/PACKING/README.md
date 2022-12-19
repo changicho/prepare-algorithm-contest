@@ -34,6 +34,27 @@ dp의 종류에 최소 O(N \* W)의 공간 복잡도를 사용한다.
 | :----------: | :---------: | :---------: |
 |    632ms     | O(N^2 \* W) | O(N^2 \* W) |
 
+knapsack 풀이 알고리즘을 이용하며, 각 상태마다 물건의 index들 또한 같이 넘긴다.
+
+이 때 물건의 index가 아니라 string 문자를 같이 넘길 경우 오답으로 측정되므로 주의한다.
+
+dp식을 다음과 같이 선언한다.
+
+```cpp
+// definition
+dp[i][w]; // maximum value when until (i-1)'th stuff, use w weight
+
+// initialize
+dp[0][w] = dp[i][0] = 0;
+
+// update
+dp[i][w] = max(dp[i - 1][w], dp[i - 1][w - stuff.weight] + stuff.value);
+```
+
+위 dp식의 값에 현재까지 넣은 물건의 index들 또한 같이 저장하고 넘긴다.
+
+이 경우 dp식을 갱신할 때마다, 물건들의 index또한 같이 넘겨야 하므로 O(N)의 시간 복잡도를 더 사용한다.
+
 ```cpp
 struct Stuff {
   string name;
@@ -88,6 +109,14 @@ Data solution(vector<Stuff> &stuffs, int totalWeight) {
 | 내 코드 (ms) | 시간 복잡도 | 공간 복잡도 |
 | :----------: | :---------: | :---------: |
 |     28ms     |  O(N \* W)  |  O(N \* W)  |
+
+knapsack 문제로 dp식에서 최대 이익을 구한 뒤, 해당 dp배열을 역으로 순회하며 물건의 리스트를 채워나간다.
+
+가장 마지막 index, weight부터 순회하며, 만약 현재값이 index-1에 존재하는 값보다 큰 경우 현재 index의 물건을 정답에 추가한다.
+
+이후 weight를 갱신하며, index가 0이 될 때까지 순회한다.
+
+실제로는 0-index가 아닌 1-index로 선언했으므로 이에 주의한다.
 
 ```cpp
 Data solution(vector<Stuff> &stuffs, int totalWeight) {
