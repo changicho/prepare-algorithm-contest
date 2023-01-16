@@ -15,25 +15,16 @@ using namespace std;
 
 const int MAX = 1e9 + 1;
 
-int solution(int size, const vector<int> &array, int k) {
-  // dp[i][k]; i번째 까지 선택하고 k개의 수를 선택했을 때의 최대값?
-  // dp[0][1] = array[0];
-  // dp[i][k] = max(dp[i-1][k], dp[i-1][k-1] + array[i] - (k-1))
+int solution(int size, vector<int> &array, int k) {
+  int answer = 0;
 
-  vector<int> curDp(size + 1, 0), beforeDp(size + 1, 0);
+  sort(array.begin(), array.end(), greater<int>());
 
-  for (int selected = 1; selected <= k; selected++) {
-    curDp[selected] =
-        beforeDp[selected - 1] + array[selected - 1] - (selected - 1);
-    for (int i = selected + 1; i <= size; i++) {
-      curDp[i] =
-          max(curDp[i - 1], beforeDp[i - 1] + array[i - 1] - (selected - 1));
-    }
-
-    swap(beforeDp, curDp);
+  for (int i = 0; i < k; i++) {
+    answer += array[i];
+    answer -= i;
   }
 
-  int answer = beforeDp[size];
   return answer;
 }
 
