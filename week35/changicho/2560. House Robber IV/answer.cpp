@@ -14,7 +14,7 @@
 using namespace std;
 
 // use binary search
-// time : O(N * log_2(N))
+// time : O(N) = O(N * log_2(1e9))
 // space : O(1)
 class Solution {
  private:

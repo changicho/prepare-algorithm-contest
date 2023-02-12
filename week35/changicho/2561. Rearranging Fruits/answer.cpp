@@ -17,8 +17,6 @@ using namespace std;
 // time : O(N * log_2(N))
 // space : O(N)
 class Solution {
- private:
-  //
  public:
   long long minCost(vector<int>& basket1, vector<int>& basket2) {
     int size = basket1.size();

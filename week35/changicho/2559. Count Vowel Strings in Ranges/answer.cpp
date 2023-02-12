@@ -14,8 +14,8 @@
 using namespace std;
 
 // use prefix sum
-// time : O(N)
-// space : O(N)
+// time : O(N + M)
+// space : O(N + M)
 class Solution {
  private:
   unordered_set<char> vowels = {'a', 'e', 'i', 'o', 'u'};

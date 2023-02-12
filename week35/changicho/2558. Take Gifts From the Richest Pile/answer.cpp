@@ -14,7 +14,7 @@
 using namespace std;
 
 // use priority queue
-// time : O(N * log_2(N))
+// time : O((N + K) \* log_2(N))
 // space : O(N)
 class Solution {
  public:
