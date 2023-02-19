@@ -13,20 +13,20 @@
 
 using namespace std;
 
-// use dynamic programming
-// time : O(N)
-// space : O(N)
+// use sliding window
+// time : O(N + M)
+// space : O(M)
 class Solution {
  public:
   int minimumScore(string s, string t) {
     int sLength = s.size(), tLength = t.size();
     int right = tLength - 1;
 
-    vector<int> matches(tLength, -1);
+    vector<int> suffixMatches(tLength, -1);
 
     for (int i = sLength - 1; i >= 0 && right >= 0; --i) {
       if (s[i] == t[right]) {
-        matches[right] = i;
+        suffixMatches[right] = i;
         right--;
       }
     }
@@ -34,7 +34,7 @@ class Solution {
     int answer = right + 1;
     for (int i = 0, j = 0; i < sLength && j < tLength && answer > 0; ++i) {
       if (s[i] == t[j]) {
-        while (right < tLength && matches[right] <= i) {
+        while (right < tLength && suffixMatches[right] <= i) {
           right++;
         }
 
