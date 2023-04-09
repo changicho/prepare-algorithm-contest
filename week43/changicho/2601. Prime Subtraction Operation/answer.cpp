@@ -6,8 +6,8 @@
 using namespace std;
 
 // use prime number & binary search
-// time : O(N * log_2(N) + P * log_2(log_2(P))))
-// space : O(N + P)
+// time : O(N * log_2(P) + P * log_2(log_2(P)))
+// space : O(P)
 class Solution {
  private:
   bool isNotPrime[1001];

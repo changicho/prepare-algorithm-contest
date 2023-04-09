@@ -6,7 +6,7 @@
 using namespace std;
 
 // use binary search
-// time : O(N * log_2(N))
+// time : O((N + M) * log_2(N))
 // space : O(N)
 class Solution {
  private:
