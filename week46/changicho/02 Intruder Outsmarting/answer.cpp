@@ -13,45 +13,46 @@
 
 using namespace std;
 
-long getOrder(long num, long limit, long dist) {
-  // (num + limit * x) % dist == 0
-  long long origin = num;
-  while (origin % dist != 0) {
-    origin += limit;
-  }
-  return origin / dist;
-}
-
-long getMinimumCount(long a, long b, long limit, long dist) {
-  // 0 ~ (limit-1)
-  if (a == b) return 0;
-  // limited loop
-  if (gcd(limit, dist) != 1) {
-    if (a % dist != b % dist) {
-      return -1;
-    }
-    // in same loop
-    long diff = abs(a - b);
-
-    return diff / dist;
+vector<long long> extended_gcd(long long a, long long b) {
+  if (a == 0) {
+    return {b, 0, 1};
   }
 
-  long aOrder = getOrder(a, limit, dist), bOrder = getOrder(b, limit, dist);
-  long diff = abs(aOrder - bOrder);
+  // gcd, x, y
+  vector<long long> ret = extended_gcd(b % a, a);
+  long long gcd = ret[0], x = ret[1], y = ret[2];
 
-  return min(diff, limit - diff);
+  return {gcd, (y - (b / a) * x), x};
 }
 
-int solution(long size, vector<long> &nums, long limit, long dist) {
-  int answer = 0;
+long long getDistance(long long dist, long long limit, long long x1,
+                      long long x2) {
+  vector<long long> ret = extended_gcd(dist, limit);
+  long long diff = x1 - x2;
+  long long g = ret[0], x = ret[1], y = ret[2];
+
+  if (diff % g != 0) return -1;
+
+  // dist * x + limit * y = diff
+  x *= (diff / g);
+  y *= (diff / g);
+
+  long long move = x % (limit / g);
+
+  return min(abs(move), limit / g - abs(move));
+}
+
+long long solution(long long size, vector<long long> &nums, long long limit,
+                   long long dist) {
+  long long answer = 0;
   int left = 0, right = size - 1;
   // minimum movement to make nums[left] == nums[right]
 
   while (left < right) {
-    // do something
-    int leftVal = nums[left], rightVal = nums[right];
+    long long leftVal = nums[left], rightVal = nums[right];
 
-    long minimumCount = getMinimumCount(leftVal, rightVal, limit, dist);
+    long long minimumCount = getDistance(dist, limit, leftVal, rightVal);
+
     if (minimumCount == -1) return -1;
     answer += minimumCount;
 
@@ -66,16 +67,16 @@ int main() {
   cin.tie(NULL);
   cout.tie(NULL);
 
-  // freopen("./input.txt", "r", stdin);
+  freopen("./input.txt", "r", stdin);
 
   int T;
   cin >> T;
 
   for (int testCase = 1; testCase <= T; testCase++) {
-    long W, N, D;
+    long long W, N, D;
     cin >> W >> N >> D;
 
-    vector<long> X(W);
+    vector<long long> X(W);
     for (int i = 0; i < W; i++) {
       cin >> X[i];
       X[i]--;
