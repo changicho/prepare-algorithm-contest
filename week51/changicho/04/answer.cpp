@@ -90,36 +90,50 @@ class Trie {
   }
 };
 
+vector<string> solution(vector<string> &words, vector<string> &queries) {
+  Trie *trie = new Trie();
+
+  for (string &word : words) {
+    trie->insert(word);
+  }
+
+  vector<string> ret;
+  for (string &q : queries) {
+    TrieNode *cur = trie->search(q);
+
+    if (!cur) {
+      ret.push_back("0");
+    } else {
+      string line = cur->maximum + " " + to_string(cur->maxCount);
+      ret.push_back(line);
+    }
+  }
+  return ret;
+}
+
 int main() {
   ios_base::sync_with_stdio(false);
   cin.tie(NULL);
   cout.tie(NULL);
 
   int N, K;
-  string word, query;
-
-  Trie *trie = new Trie();
 
   cin >> N;
+  vector<string> words(N);
   for (int i = 0; i < N; i++) {
-    cin >> word;
-    trie->insert(word);
+    cin >> words[i];
   }
 
   cin >> K;
+  vector<string> queries(K);
   for (int i = 0; i < K; i++) {
-    cin >> query;
-
-    TrieNode *cur = trie->search(query);
-
-    if (!cur) {
-      cout << "0"
-           << "\n";
-    } else {
-      cout << cur->maximum << " " << cur->maxCount << "\n";
-    }
+    cin >> queries[i];
   }
 
+  vector<string> answer = solution(words, queries);
+  for (string &line : answer) {
+    cout << line << "\n";
+  }
   cout << endl;
   return 0;
 }
