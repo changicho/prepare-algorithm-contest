@@ -52,10 +52,9 @@ int main() {
     int from, to;
     cin >> from >> to;
 
+    if (from == to) continue;
     graph[from].emplace_back(to);
     graph[to].emplace_back(from);
-
-    if (from == to) continue;
     inDegrees[from]++;
     inDegrees[to]++;
     merge(from, to);
@@ -76,26 +75,21 @@ int main() {
     }
   }
 
+  int answer = 0;
   if (componentCount == 1) {
     // cout<<"single"<<endl;
     int needs = componentOddCounts[1] / 2;
 
-    if (needs > 0 && inDegrees[1] % 2 == 0) {
-      needs++;
-    }
-
-    cout << needs << endl;
+    answer += needs;
+    cout << answer << endl;
     return 0;
   }
 
-  int answer = 0;
   for (auto &it : componentOddCounts) {
     int key = it.first, val = it.second;
     // cout<<key<<" "<<val<<endl;
     int needs = val / 2;
-    if (key == 1 && needs > 0 && inDegrees[1] % 2 == 0) {
-      answer++;
-    }
+
     answer += max(needs - 2, 0);
   }
   // cout<<componentCount<<endl;
