@@ -52,7 +52,7 @@ int main() {
     int from, to;
     cin >> from >> to;
 
-    if (from == to) continue;
+    // if (from == to) continue;
     graph[from].emplace_back(to);
     graph[to].emplace_back(from);
     inDegrees[from]++;
