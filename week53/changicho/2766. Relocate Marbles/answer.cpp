@@ -6,6 +6,9 @@
 
 using namespace std;
 
+// use hash set
+// time : O(N * log_2(N) + M)
+// space : O(N)
 class Solution {
  public:
   vector<int> relocateMarbles(vector<int>& nums, vector<int>& moveFrom,
