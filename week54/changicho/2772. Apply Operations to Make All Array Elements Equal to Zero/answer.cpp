@@ -13,16 +13,18 @@ class Solution {
   bool checkArray(vector<int>& nums, int k) {
     int size = nums.size();
     int diff = 0;
-    for (int i = 0; i < size; i++) {
-      if (diff > nums[i]) {
+    for (int right = 0; right < size; right++) {
+      int left = right - k + 1;
+
+      if (diff > nums[right]) {
         return false;
       }
 
-      nums[i] -= diff;
-      diff += nums[i];
+      nums[right] -= diff;
+      diff += nums[right];
 
-      if (i >= k - 1) {
-        diff -= nums[i - k + 1];
+      if (right >= k - 1) {
+        diff -= nums[left];
       }
     }
 
