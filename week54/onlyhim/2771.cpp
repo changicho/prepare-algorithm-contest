@@ -29,3 +29,11 @@ public:
         return go(v1, v2, dp, 0, 0);
     }
 };
+
+
+/*
+dp[i][j] = 현재 위치가 i이고 상태가 j일 때의 longest subarray
+j=0 -> 선택한적이 없음, j=1 -> nums1을 선택함 j=2 -> nums2를 선택함
+subarray이므로 이전에 선택한 경험이 있으면 반드시 sequential하게 진행되어야 한다 (Line 13~19)
+이전에 선택한 적이 없으면 1) 다음 nums도 선택하지 않거나 2) nums1를 선택하거나 3) nums2를 선택할 수 있다 (Linke 8~11)
+*/
