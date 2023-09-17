@@ -17,10 +17,10 @@ long long MOD = 1e9 + 7;
 bool leapfrog(string &line) {
   int size = line.size();
 
-  int countB = count(line.begin(), line.end(), 'B');
+  int countBeta = count(line.begin(), line.end(), 'B');
   int countPoint = count(line.begin(), line.end(), '.');
 
-  return countB >= countPoint && countPoint > 0;
+  return countBeta >= countPoint && countPoint > 0;
 }
 
 int main() {

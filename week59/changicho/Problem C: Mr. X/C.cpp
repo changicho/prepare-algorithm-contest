@@ -51,7 +51,7 @@ int mr_x(string& E) {
   unordered_map<char, int> lookup1{{'0', 0}, {'1', 1}, {'x', 0}, {'X', 1}};
   unordered_map<char, int> lookup2{{'0', 0}, {'1', 1}, {'x', 1}, {'X', 0}};
 
-  return evaluate(E, lookup1) ^ evaluate(E, lookup2);
+  return evaluate(E, lookup1) == evaluate(E, lookup2) ? 0 : 1;
 }
 
 int main() {
