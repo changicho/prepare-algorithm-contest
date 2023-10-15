@@ -63,10 +63,6 @@ void init() {
       }
     }
   }
-
-  // for (int &p : primes) {
-  //   cout << p << endl;
-  // }
 }
 
 int main() {
