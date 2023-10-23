@@ -1,17 +1,42 @@
-#include <algorithm>
-#include <cmath>
-#include <iostream>
-#include <map>
-#include <queue>
-#include <set>
-#include <stack>
-#include <string>
-#include <unordered_map>
-#include <unordered_set>
-#include <vector>
+# Problem A2: Ready, Go (Part 2)
 
-using namespace std;
+[링크](https://www.facebook.com/codingcompetitions/hacker-cup/2023/round-2/problems/A2)
 
+## 설계
+
+### 시간 복잡도
+
+입력받은 2차원 배열의 행의 갯수를 R, 열의 갯수를 C라 하자.
+
+모든 좌표의 갯수를 N이라 할 때 (R \* C = N) 검은 돌을 놓을 수 있는 경우의 수는 O(N)이다.
+
+이후 내부적으로 BFS를 이용해 탐색할 경우 총 O(N^2)의 시간 복잡도를 사용한다.
+
+혹은 백색 돌들을 BFS로 순회 후 테두리의 빈 공간을 세는 방법도 가능하다.
+
+이 경우 O(N)의 시간 복잡도를 사용한다.
+
+### 공간 복잡도
+
+BFS에 O(N)의 공간 복잡도를 사용한다.
+
+### BFS
+
+| 시간 복잡도 | 공간 복잡도 |
+| :---------: | :---------: |
+|    O(N)     |    O(N)     |
+
+붙어있는 흰색 돌들을 그룹으로 묶는다 하자.
+
+해당 그룹의 테두리에 검은 돌들이 존재하며, 빈 공간이 하나만 존재할 때 해당 위치에 검은 돌을 두면 흰색 돌을 잡을 수 있다.
+
+이 때 흰색 돌을 잡을 수 있는 위치를 key로 하는 hash map을 생성 후 value에 현재 흰 돌의 갯수를 더한다.
+
+이를 모든 흰색 돌 그룹에 대해 수행할 경우 흰색 돌을 잡을 수 있는 위치를 key로 하는 hash map을 생성할 수 있다.
+
+이를 이용해 가장 많은 흰색 돌을 잡을 수 있는 좌표를 찾을 수 있다.
+
+```cpp
 struct Axis {
   int y, x;
 };
@@ -85,35 +110,6 @@ int solution(vector<vector<char>> &board) {
 
   return answer;
 }
+```
 
-int main() {
-  ios_base ::sync_with_stdio(false);
-  cin.tie(NULL);
-  cout.tie(NULL);
-
-  cout.precision(10);
-
-  // freopen("./input.txt", "r", stdin);
-  freopen("./ready_go_part_2_input.txt", "r", stdin);
-
-  int T;
-  cin >> T;
-  for (int testCase = 1; testCase <= T; testCase++) {
-    int R, C;
-    cin >> R >> C;
-
-    vector<vector<char>> board(R, vector<char>(C));
-
-    for (int y = 0; y < R; y++) {
-      for (int x = 0; x < C; x++) {
-        cin >> board[y][x];
-      }
-    }
-    int answer = solution(board);
-
-    cout << "Case #" << testCase << ": ";
-    cout << answer << "\n";
-  }
-
-  return 0;
-}
+## 고생한 점
