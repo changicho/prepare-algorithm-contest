@@ -25,3 +25,23 @@ class Solution {
     return answer;
   }
 };
+
+// use divide
+// time : O(N)
+// space : O(1)
+class Solution {
+ public:
+  long long distributeCandies(int n, int limit) {
+    long long answer = 0;
+    int firstMin = max(0, n - 2 * limit);
+    int firstMax = min(limit, n);
+
+    for (int i = firstMin; i <= firstMax; ++i) {
+      int secondMin = max(0, n - i - limit);
+      int secondMax = min(limit, n - i);
+
+      answer += secondMax - secondMin + 1;
+    }
+    return answer;
+  }
+};
