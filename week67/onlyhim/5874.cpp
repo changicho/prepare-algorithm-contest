@@ -1,3 +1,15 @@
+#define _CRT_SECURE_NO_WARNINGS
+
+#include <vector>
+#include <iostream>
+#include <string>
+#include <algorithm>
+#include <numeric>
+#include <set>
+#include <cmath>
+using namespace std;
+
+
 int main() {
 	ios_base::sync_with_stdio(false);
 	cin.tie(NULL);
@@ -19,3 +31,10 @@ int main() {
 	cout << ans;
 	return 0;
 }
+
+/*
+	((가 있는 idx, ))가 있는 idx를 모두 계산해놓는다.
+	((의 idx 배열을 leftLegs, ))의 idx 배열을 rightLegs라 한다.
+	))는 항상 (( 왼쪽에 있어야 하므로 leftLegs[i]의 값보다 큰 rightLegs의 갯수를 답에 더한다.
+	O(N) / O(N)
+*/
