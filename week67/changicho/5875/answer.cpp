@@ -11,8 +11,7 @@
 
 using namespace std;
 
-int solution(string &s) {
-  int size = s.size();
+int countChangeClose(string &s) {
   int answer = 0;
 
   int opens = 0, closes = 0;
@@ -20,27 +19,35 @@ int solution(string &s) {
 
   for (char &c : s) {
     if (c == '(') {
-      opens += 1;
       diff += 1;
-
     } else {
       closes += 1;
       diff -= 1;
     }
 
-    if (diff <= 1) {
-      opens = 0;
-    }
-
-    if (diff == -1) {
-      answer = closes;
+    if (diff < 0) {
+      return closes;
       break;
     }
   }
 
-  if (diff > 0) {
-    answer = opens;
+  return 0;
+}
+
+int solution(string &s) {
+  int size = s.size();
+
+  int answer = 0;
+
+  answer += countChangeClose(s);
+  reverse(s.begin(), s.end());
+  for (int i = 0; i < size; i++) {
+    if (s[i] == '(')
+      s[i] = ')';
+    else
+      s[i] = '(';
   }
+  answer += countChangeClose(s);
 
   return answer;
 }

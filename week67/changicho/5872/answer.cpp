@@ -11,8 +11,6 @@
 using namespace std;
 
 int solution(string s) {
-  int size = s.size();
-
   int diff = 0;
 
   int answer = 0;
@@ -45,10 +43,6 @@ int main() {
 
   string S;
   cin >> S;
-
-  int size = S.size();
-
-  int diff = 0;
 
   int answer = solution(S);
 
