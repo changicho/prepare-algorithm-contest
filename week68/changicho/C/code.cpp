@@ -12,6 +12,29 @@
 
 using namespace std;
 
+string solution(string &s, vector<vector<char>> &queries) {
+  string table = "";
+  for (char c = 'a'; c <= 'z'; c++) {
+    table += c;
+  }
+
+  for (vector<char> &q : queries) {
+    char from = q[0], to = q[1];
+
+    for (int i = 0; i < table.size(); i++) {
+      if (table[i] == from) {
+        table[i] = to;
+      }
+    }
+  }
+
+  for (char &c : s) {
+    c = table[c - 'a'];
+  }
+
+  return s;
+}
+
 int main() {
   ios_base ::sync_with_stdio(false);
   cin.tie(NULL);
@@ -34,29 +57,9 @@ int main() {
     cin >> queries[i][0] >> queries[i][1];
   }
 
-  string temp = "";
-  for (char c = 'a'; c <= 'z'; c++) {
-    temp += c;
-  }
+  string ret = solution(S, queries);
 
-  for (vector<char> &q : queries) {
-    char a = q[0];
-    char b = q[1];
-
-    for (int i = 0; i < temp.size(); i++) {
-      if (temp[i] == a) {
-        temp[i] = b;
-      }
-    }
-  }
-
-  for (int i = 0; i < S.size(); i++) {
-    char c = S[i];
-
-    S[i] = temp[c - 'a'];
-  }
-
-  cout << S << "\n";
+  cout << ret << "\n";
 
   return 0;
 }

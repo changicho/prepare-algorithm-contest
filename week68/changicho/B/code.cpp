@@ -12,9 +12,26 @@
 
 using namespace std;
 
-int solution(int num) {
-  // do something
-  return false;
+vector<int> solution(vector<int> &positions, vector<vector<int>> &queries) {
+  int size = positions.size();
+
+  vector<int> answer;
+  vector<int> orders(size + 1);
+  for (int i = 0; i < size; i++) {
+    orders[positions[i]] = i + 1;
+  }
+
+  for (vector<int> &query : queries) {
+    int a = query[0], b = query[1];
+
+    if (orders[a] < orders[b]) {
+      answer.push_back(a);
+    } else {
+      answer.push_back(b);
+    }
+  }
+
+  return answer;
 }
 
 int main() {
@@ -42,21 +59,7 @@ int main() {
     cin >> queries[i][0] >> queries[i][1];
   }
 
-  vector<int> answer;
-  vector<int> orders(N + 1);
-  for (int i = 0; i < N; i++) {
-    orders[P[i]] = i + 1;
-  }
-
-  for (vector<int> &query : queries) {
-    int a = query[0], b = query[1];
-
-    if (orders[a] < orders[b]) {
-      answer.push_back(a);
-    } else {
-      answer.push_back(b);
-    }
-  }
+  vector<int> answer = solution(P, queries);
 
   for (int &a : answer) {
     cout << a << '\n';

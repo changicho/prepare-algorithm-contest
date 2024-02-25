@@ -12,22 +12,7 @@
 
 using namespace std;
 
-int main() {
-  ios_base ::sync_with_stdio(false);
-  cin.tie(NULL);
-  cout.tie(NULL);
-
-  // cout.precision(10);
-
-  // freopen("./input.txt", "r", stdin);
-
-  int N;
-  cin >> N;
-  vector<int> A(N);
-  for (int i = 0; i < N; i++) {
-    cin >> A[i];
-  }
-
+long long solution(vector<int> &nums) {
   const int PRIME_SIZE = 500;
   bool isNotPrime[PRIME_SIZE] = {false};
 
@@ -50,9 +35,9 @@ int main() {
 
   int zeroCount = 0;
 
-  for (int &num : A) {
+  for (int &num : nums) {
     if (num == 0) {
-      answer += (A.size() - 1 - zeroCount);
+      answer += (nums.size() - 1 - zeroCount);
 
       zeroCount++;
       continue;
@@ -83,6 +68,27 @@ int main() {
     answer += counts[converted];
     counts[converted]++;
   }
+
+  return answer;
+}
+
+int main() {
+  ios_base ::sync_with_stdio(false);
+  cin.tie(NULL);
+  cout.tie(NULL);
+
+  // cout.precision(10);
+
+  // freopen("./input.txt", "r", stdin);
+
+  int N;
+  cin >> N;
+  vector<int> A(N);
+  for (int i = 0; i < N; i++) {
+    cin >> A[i];
+  }
+
+  long long answer = solution(A);
 
   cout << answer << "\n";
 
