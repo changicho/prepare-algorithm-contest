@@ -28,17 +28,18 @@ int main() {
     cin >> A[i];
   }
 
-  bool isNotPrime[200001] = {false};
+  const int PRIME_SIZE = 500;
+  bool isNotPrime[PRIME_SIZE] = {false};
 
-  for (int i = 2; i < 200001; i++) {
+  for (int i = 2; i < PRIME_SIZE; i++) {
     if (isNotPrime[i]) continue;
-    for (int j = i * 2; j < 200001; j += i) {
+    for (int j = i * 2; j < PRIME_SIZE; j += i) {
       isNotPrime[j] = true;
     }
   }
 
   vector<int> primes;
-  for (int i = 2; i < 200001; i++) {
+  for (int i = 2; i < PRIME_SIZE; i++) {
     if (!isNotPrime[i]) {
       primes.push_back(i);
     }
@@ -67,7 +68,7 @@ int main() {
       }
     }
 
-    int converted = 1;
+    int converted = num;
     for (auto &factor : factors) {
       if (factor.second % 2 == 0) {
         continue;
