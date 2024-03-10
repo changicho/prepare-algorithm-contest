@@ -11,8 +11,6 @@
 #include <unordered_set>
 #include <vector>
 
-const long long INF = 1e18;
-
 using namespace std;
 
 struct Status {
@@ -23,14 +21,14 @@ long long solution(vector<vector<int>> &powers, vector<vector<int>> &rights,
                    vector<vector<int>> &downs) {
   int size = powers.size();
 
-  vector<vector<Status>> dp(size, vector<Status>(size, {INF, 0}));
+  vector<vector<Status>> dp(size, vector<Status>(size, {LLONG_MAX, 0}));
 
   dp[0][0] = {0, 0};
 
   for (int curY = 0; curY < size; ++curY) {
     for (int curX = 0; curX < size; ++curX) {
       vector<vector<long long>> costs(curY + 1,
-                                      vector<long long>(curX + 1, INF));
+                                      vector<long long>(curX + 1, LLONG_MAX));
 
       costs[curY][curX] = 0;
 
