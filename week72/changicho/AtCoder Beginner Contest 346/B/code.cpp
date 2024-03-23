@@ -15,23 +15,19 @@ using namespace std;
 bool solution(int &w, int &b) {
   string piano = "wbwbwwbwbwbw";
 
-  while (piano.size() < 200) {
-    piano += piano;
-  }
-
   int size = piano.size();
 
   int length = w + b;
-  for (int i = 0; i <= size - length; i++) {
+  for (int index = 0; index < size; index++) {
     int wCount = 0, bCount = 0;
-    for (int j = i; j < i + length; j++) {
-      if (piano[j] == 'b') {
+    for (int i = 0; i < length; i++) {
+      char cur = piano[(index + i) % size];
+      if (cur == 'b') {
         bCount++;
-      } else if (piano[j] == 'w' && w > 0) {
+      } else if (cur == 'w') {
         wCount++;
       }
     }
-
     if (wCount == w && bCount == b) return true;
   }
 

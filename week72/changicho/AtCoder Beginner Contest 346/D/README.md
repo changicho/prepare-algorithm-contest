@@ -1,18 +1,54 @@
-#include <algorithm>
-#include <climits>
-#include <cmath>
-#include <iostream>
-#include <map>
-#include <queue>
-#include <set>
-#include <stack>
-#include <string>
-#include <unordered_map>
-#include <unordered_set>
-#include <vector>
+# D - Gomamayo Sequence
 
-using namespace std;
+[링크](https://atcoder.jp/contests/abc346/tasks/abc346_d)
 
+| 난이도 |
+| :----: |
+|  400   |
+
+## 설계
+
+### 시간 복잡도
+
+문자열의 길이를 N이라 하자.
+
+모든 경우를 탐색할 경우 O(N^2)의 시간 복잡도를 사용하며 이는 제한시간 내에 불가능하다.
+
+prefix sum을 이용해 풀이할 경우 O(N)의 시간 복잡도로 풀이 가능하다.
+
+### 공간 복잡도
+
+prefix sum에 O(N)의 공간 복잡도가 필요하다.
+
+### prefix sum
+
+| 내 코드 (ms) | 시간 복잡도 | 공간 복잡도 |
+| :----------: | :---------: | :---------: |
+|      15      |    O(N)     |    O(N)     |
+
+최종적으로 문자열은 다음과 같은 형태 중 하나로 나타낼 수 있다.
+
+- 0101...100...10101
+- 1010...110...10101
+- 0101...001...10101
+- 1010...011...10101
+
+즉 중복되야 하는 문자열의 index를 i라 할 때 다음 두 가지 중 하나와 같은 문자로 맞춘 최종 형태를 생성한다.
+
+- i-1과 같은 문자
+- i+1과 같은 문자
+
+이 때 0 ~ i-1까지 부분과 i+1 ~ N-1까지 부분을 나눠서 생각해 볼 수 있다.
+
+두 부분은 0101, 1010등 직전값과 다른 문자로 이루어진 문자열이며 이를 만드는 비용을 바로 구할 수 있다.
+
+이 값들을 prefix sum으로 저장해놓고 각 range에 대한 합을 빠르게 구한다.
+
+i를 순회하며 각 경우들에 대한 정답을 갱신한다.
+
+이 때 i가 양 끝 값인 경우 연이은 문자와 같은 문자로만 바꿔야 하므로 이를 별도로 계산한다.
+
+```cpp
 long long solution(string &s, vector<long long> &costs) {
   int size = s.size();
 
@@ -89,30 +125,6 @@ long long solution(string &s, vector<long long> &costs) {
 
   return answer;
 }
+```
 
-int main() {
-  ios_base ::sync_with_stdio(false);
-  cin.tie(NULL);
-  cout.tie(NULL);
-
-  cout.precision(10);
-
-  // freopen("./input.txt", "r", stdin);
-
-  int N;
-  cin >> N;
-
-  string S;
-  cin >> S;
-
-  vector<long long> C(N);
-  for (int i = 0; i < N; i++) {
-    cin >> C[i];
-  }
-
-  long long answer = solution(S, C);
-
-  cout << answer << endl;
-
-  return 0;
-}
+## 고생한 점
