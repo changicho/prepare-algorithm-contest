@@ -12,16 +12,16 @@
 
 using namespace std;
 
-bool solution(long long a, long long b, vector<long long> &days) {
-  long long allDays = a + b;
+bool solution(int a, int b, vector<int> &days) {
+  int allDays = a + b;
 
-  unordered_set<long long> us;
-  for (long long &day : days) {
-    long long cur = day % allDays;
+  unordered_set<int> us;
+  for (int &day : days) {
+    int cur = day % allDays;
     us.insert(cur);
   }
 
-  vector<long long> remainders(us.begin(), us.end());
+  vector<int> remainders(us.begin(), us.end());
   sort(remainders.begin(), remainders.end());
 
   int size = remainders.size();
@@ -31,8 +31,8 @@ bool solution(long long a, long long b, vector<long long> &days) {
   }
 
   for (int i = 0; i < size; i++) {
-    long long start = remainders[i];
-    long long end = remainders[i + size - 1];
+    int start = remainders[i];
+    int end = remainders[i + size - 1];
 
     if (end - start + 1 <= a) {
       return true;
@@ -51,10 +51,9 @@ int main() {
 
   // freopen("./input.txt", "r", stdin);
 
-  int N;
-  long long A, B;
+  int N, A, B;
   cin >> N >> A >> B;
-  vector<long long> D(N);
+  vector<int> D(N);
 
   for (int i = 0; i < N; i++) {
     cin >> D[i];

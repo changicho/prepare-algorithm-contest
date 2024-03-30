@@ -14,7 +14,7 @@ typedef unsigned long long ULL;
 
 using namespace std;
 
-string convert(long long num) {
+string convert(ULL num) {
   string result = "";
   while (num > 0) {
     result += '0' + (num % 2);
