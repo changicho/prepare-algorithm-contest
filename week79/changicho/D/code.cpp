@@ -12,11 +12,6 @@
 
 using namespace std;
 
-bool isCrossed(pair<int, int> &a, pair<int, int> &b) {
-  if (b.first < a.second && a.first < b.second) return true;
-  return false;
-}
-
 long long solution(int size, vector<pair<int, int>> intervals) {
   // find cross pairs of intervals
 

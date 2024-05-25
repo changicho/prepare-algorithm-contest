@@ -13,9 +13,6 @@
 using namespace std;
 
 bool solution(vector<int> &a, vector<int> &b) {
-  sort(a.begin(), a.end());
-  sort(b.begin(), b.end());
-
   unordered_set<int> us(a.begin(), a.end());
 
   vector<int> c;
