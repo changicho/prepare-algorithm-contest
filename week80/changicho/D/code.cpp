@@ -27,13 +27,8 @@ int solution(ll n, ll m) {
 
   ll answer = 0;
 
-  int leftOne = __builtin_popcountll(m);
-  int rightOne = 0;
-
   for (ull i = 0; i < 64; i++) {
     if (m & (1LL << i)) {
-      leftOne--;
-
       ll temp, totalLeft, totalRight;
       if (n & (1LL << i)) {
         temp = n;
@@ -49,8 +44,6 @@ int solution(ll n, ll m) {
 
       answer += totalCase + 1;
       answer %= MOD;
-
-      rightOne++;
     }
   }
 
