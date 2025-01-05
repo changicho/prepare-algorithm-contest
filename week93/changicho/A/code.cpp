@@ -15,6 +15,8 @@
 
 using namespace std;
 
+int solution(int a, int b) { return (a + b) * (a + b); }
+
 int main() {
   ios_base ::sync_with_stdio(false);
   cin.tie(NULL);
@@ -24,12 +26,10 @@ int main() {
 
   // freopen("./input.txt", "r", stdin);
 
-  long long A, B;
+  int A, B;
   cin >> A >> B;
 
-  long long cur = A + B;
-
-  cout << cur * cur << endl;
+  cout << solution(A, B) << endl;
 
   return 0;
 }
