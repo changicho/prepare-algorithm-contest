@@ -20,9 +20,6 @@ struct Axis {
 };
 
 int solution(int n, int m, vector<Axis>& axises) {
-  bool board[1001][1001] = {
-      false,
-  };
   Axis cur = {0, 0};
 
   int answer = 0;
@@ -42,8 +39,6 @@ int solution(int n, int m, vector<Axis>& axises) {
 
     beforeY = cur.y;
     beforeX = cur.x;
-
-    // cout << answer << endl;
   }
 
   return answer;

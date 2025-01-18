@@ -15,10 +15,6 @@
 
 using namespace std;
 
-// 1 2 3 4 1 1 : 6
-
-// 1 2 3 4 5 6 7 8 1 1 : 10
-
 vector<int> solution(int n) {
   vector<int> answer(n, 1);
   for (int i = 0; i < n; i++) {

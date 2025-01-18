@@ -18,29 +18,19 @@ using namespace std;
 vector<int> solution(int n, vector<string>& graph) {
   vector<int> answer;
 
-  vector<unordered_set<int>> preOrder(n);
-
-  for (int node = 0; node < n; node++) {
-    for (int before = node + 1; before < n; before++) {
-      if (graph[node][before] == '0') preOrder[node].insert(before);
-    }
-  }
-
   for (int i = 0; i < n; i++) {
     answer.push_back(i);
   }
 
   sort(answer.begin(), answer.end(), [&](int a, int b) {
-    if (a > b) {
-      return preOrder[b].count(a) > 0;
-    } else {
-      return !(preOrder[a].count(b) > 0);
-    }
+    if (a < b)
+      return graph[a][b] == '1';
+    else
+      return graph[a][b] == '0';
   });
 
   for (int i = 0; i < n; i++) {
     answer[i]++;
-    // cout << answer[i] << " ";
   }
 
   return answer;
@@ -69,8 +59,8 @@ int main() {
 
     vector<int> answer = solution(N, graph);
 
-    for (int& line : answer) {
-      cout << line << " ";
+    for (int& a : answer) {
+      cout << a << " ";
     }
     cout << endl;
   }
