@@ -18,29 +18,18 @@ using namespace std;
 long long solution(int size, vector<int> &nums) {
   long long answer = 0;
 
-  vector<int> diffs(size - 1, 0);
-
-  for (int i = 0; i < size - 1; i++) {
-    if (nums[i] < nums[i + 1]) {
-      diffs[i] = 1;
-    } else if (nums[i] > nums[i + 1]) {
-      diffs[i] = -1;
-    }
-  }
-
   long long beforeCount = 0;
   long long curCount = 0;
-
-  for (int diff : diffs) {
-    if (diff == -1) {
+  for (int i = 0; i < size - 1; i++) {
+    if (nums[i] < nums[i + 1]) {
+      curCount++;
+    } else if (nums[i] > nums[i + 1]) {
       answer += curCount * beforeCount;
 
       if (curCount > 0) {
         beforeCount = curCount;
       }
       curCount = 0;
-    } else if (diff == 1) {
-      curCount++;
     }
   }
 
