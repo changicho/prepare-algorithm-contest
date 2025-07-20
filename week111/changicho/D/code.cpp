@@ -30,32 +30,6 @@ long long solution(long long n, int actionSize, vector<Action> &actions) {
     return a.give < b.give;
   });
 
-  // for (int i = 0; i < actionSize; i++) {
-  //   cout << actions[i].give << " " << actions[i].receive << endl;
-  // }
-
-  // cout << endl;
-
-  function<int(long long)> findIndex = [&](long long value) {
-    int left = 0, right = actionSize;
-
-    int ret = -1;
-    while (left < right) {
-      int mid = left + (right - left) / 2;
-
-      if (actions[mid].give <= value) {
-        ret = mid;
-        left = mid + 1;
-      } else {
-        right = mid;
-      }
-    }
-    return ret;
-  };
-
-  // choose optimal give is smaller than n
-  // and give - receive is maximum
-
   vector<int> optimalGive(actionSize);
   optimalGive[0] = 0;
   for (int i = 1; i < actionSize; i++) {
@@ -70,22 +44,14 @@ long long solution(long long n, int actionSize, vector<Action> &actions) {
     }
   }
 
-  // for (int i = 0; i < actionSize; i++) {
-  //   cout << optimalGive[i] << endl;
-  // }
-  // cout << endl;
-  // return 0;
-
-  while (n >= actions[0].give) {
-    int targetIndex = findIndex(n);
-    if (targetIndex == -1) break;
+  for (int targetIndex = actionSize - 1; targetIndex >= 0; targetIndex--) {
+    if (actions[targetIndex].give > n) {
+      continue;
+    }
 
     int choose = optimalGive[targetIndex];
     long long targetGive = actions[choose].give;
     long long targetReceive = actions[choose].receive;
-
-    // cout << n << endl;
-    // cout << targetGive << " " << targetReceive << endl;
 
     long long diff = targetGive - targetReceive;
 
@@ -93,8 +59,6 @@ long long solution(long long n, int actionSize, vector<Action> &actions) {
     answer += count;
 
     n -= count * diff;
-
-    // cout << n << endl;
   }
 
   return answer;

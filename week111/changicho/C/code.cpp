@@ -17,8 +17,10 @@ using namespace std;
 
 struct Status {
   int mixed = 0;
-  int left = 0;
+  int canUse = 0;
 };
+
+long long convert(pair<int, int> p) { return p.first * 1e7 + p.second; }
 
 bool solution(int n, string &s) {
   bool answer = false;
@@ -38,28 +40,26 @@ bool solution(int n, string &s) {
   queue<Status> q;
   q.push({0, (1 << n) - 1});
 
-  set<pair<int, int>> visited;
-  visited.insert({0, (1 << n) - 1});
+  unordered_set<long long> visited;
+  visited.insert(convert({0, (1 << n) - 1}));
 
   while (!q.empty() && !answer) {
     Status cur = q.front();
     q.pop();
 
-    // cout << cur.mixed << " " << cur.left << endl;
-
     for (int &chem : chemicals) {
-      if (cur.left & (1 << (chem - 1)) == 0) continue;
+      if (cur.canUse & (1 << (chem - 1)) == 0) continue;
       if (cur.mixed & (1 << (chem - 1))) continue;
 
       Status next = cur;
-      next.left -= (1 << (chem - 1));
+      next.canUse -= (1 << (chem - 1));
       next.mixed += (1 << (chem - 1));
 
-      if (visited.count({next.mixed, next.left}) > 0) continue;
-      visited.insert({next.mixed, next.left});
+      if (visited.count(convert({next.mixed, next.canUse})) > 0) continue;
+      visited.insert(convert({next.mixed, next.canUse}));
 
       if (dangerous.count(next.mixed)) continue;
-      if (next.left == 0) {
+      if (next.canUse == 0) {
         answer = true;
         break;
       }
