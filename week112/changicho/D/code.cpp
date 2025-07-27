@@ -63,8 +63,6 @@ long long solution(int n, int m, vector<int> &a, vector<int> &b) {
 
     answer += (remains[i] + *it) % m;
     remainsB.erase(it);
-
-    // cout << remains[i] << " " << target << " " << *it << endl;
   }
 
   return answer;
