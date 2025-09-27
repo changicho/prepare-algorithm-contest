@@ -27,14 +27,14 @@ vector<int> solution(int size, vector<int> &nums) {
     visited[num] = true;
   }
 
-  vector<int> numSet;
-  for (int num = 1; num <= size; num++) {
-    if (!visited[num]) numSet.push_back(num);
-  }
+  int target = 1;
+  while (target < size && visited[target]) target++;
 
-  for (int i = 0, j = 0; i < size; i++) {
+  for (int i = 0; i < size && target <= size; i++) {
     if (nums[i] == -1) {
-      nums[i] = numSet[j++];
+      nums[i] = target;
+      target++;
+      while (target < size && visited[target]) target++;
     }
   }
 

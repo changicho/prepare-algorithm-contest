@@ -21,22 +21,6 @@ struct Axis {
 
 Axis dirs[4] = {{-1, 0}, {0, 1}, {1, 0}, {0, -1}};
 
-bool checkExactlyOneBlack(int y, int x, vector<string> &board) {
-  int rows = board.size(), cols = board[0].size();
-  int count = 0;
-  for (auto &dir : dirs) {
-    int ny = y + dir.y;
-    int nx = x + dir.x;
-    if (ny < 0 || ny >= rows || nx < 0 || nx >= cols) {
-      continue;
-    }
-    if (board[ny][nx] == '#') {
-      count++;
-    }
-  }
-  return count == 1;
-}
-
 auto solution(int rows, int cols, vector<string> &board) {
   vector<vector<bool>> visited(rows, vector<bool>(cols, false));
   vector<vector<int>> counts(rows, vector<int>(cols, 0));
@@ -59,22 +43,22 @@ auto solution(int rows, int cols, vector<string> &board) {
       q.pop();
 
       for (auto &dir : dirs) {
-        int ny = cur.y + dir.y;
-        int nx = cur.x + dir.x;
-        if (ny < 0 || ny >= rows || nx < 0 || nx >= cols) {
+        Axis next = {cur.y + dir.y, cur.x + dir.x};
+
+        if (next.y < 0 || next.y >= rows || next.x < 0 || next.x >= cols) {
           continue;
         }
-        if (board[ny][nx] == '#') {
+        if (board[next.y][next.x] == '#') {
           continue;
         }
 
-        counts[ny][nx]++;
+        counts[next.y][next.x]++;
 
-        if (visited[ny][nx]) {
+        if (visited[next.y][next.x]) {
           continue;
         }
-        visited[ny][nx] = true;
-        nexts.push_back({ny, nx});
+        visited[next.y][next.x] = true;
+        nexts.push_back({next.y, next.x});
       }
     }
 
@@ -86,13 +70,7 @@ auto solution(int rows, int cols, vector<string> &board) {
     }
   }
 
-  // for (string &line : board) {
-  //   cout << line << endl;
-  // }
-  // cout << endl;
-
   int answer = 0;
-
   for (string &line : board) {
     for (char &c : line) {
       if (c == '#') answer++;
