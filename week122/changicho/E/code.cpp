@@ -15,7 +15,7 @@
 
 using namespace std;
 
-int kmp(vector<bool>& line, vector<bool>& pattern) {
+int kmp(string& line, string& pattern) {
   int size = line.size(), pSize = pattern.size();
   vector<int> pIndexes(pSize, 0);
 
@@ -49,33 +49,11 @@ int kmp(vector<bool>& line, vector<bool>& pattern) {
 }
 
 auto solution(string& a, string& b) {
-  vector<bool> newArr;
+  a += a;
 
-  for (char& c : a) {
-    if (c == '1') {
-      newArr.push_back(true);
-    } else {
-      newArr.push_back(false);
-    }
-  }
-  for (char& c : a) {
-    if (c == '1') {
-      newArr.push_back(true);
-    } else {
-      newArr.push_back(false);
-    }
-  }
+  int answer = kmp(a, b);
 
-  vector<bool> keyArr;
-  for (char& c : b) {
-    if (c == '1') {
-      keyArr.push_back(true);
-    } else {
-      keyArr.push_back(false);
-    }
-  }
-
-  return kmp(newArr, keyArr);
+  return answer;
 }
 
 int main() {

@@ -37,14 +37,11 @@ auto solution(int size, vector<long long> nums) {
     auto it = prevs.lower_bound(num);
 
     if (it == prevs.end()) {
-      // cout << "newLast" << endl;
       long long last = prevs.rbegin()->first;
 
       nexts[last] = num;
       prevs[num] = last;
       nexts[num] = INT_MAX;
-
-      // cout << num << " " << last << endl;
 
       sum += (num - last);
 
@@ -61,9 +58,6 @@ auto solution(int size, vector<long long> nums) {
 
       long long newPrevCost = (num - prev);
       long long newNextCost = (next - num);
-
-      // cout << prevCost << " " << nextCost << " " << newPrevCost << " "
-      //      << newNextCost << endl;
 
       if (prevCost > newPrevCost) {
         sum -= prevCost;

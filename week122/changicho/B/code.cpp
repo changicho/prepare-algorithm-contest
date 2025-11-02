@@ -27,8 +27,6 @@ auto solution(int size, int m, vector<string>& board) {
         pattern += "$";
       }
 
-      // cout << pattern << endl;
-
       patterns.insert(pattern);
     }
   }
