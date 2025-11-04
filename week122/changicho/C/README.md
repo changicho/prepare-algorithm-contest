@@ -88,4 +88,55 @@ auto solution(int size, int a, int b, string& s) {
 }
 ```
 
+### 투 포인터
+
+| 내 코드 (ms) | 시간 복잡도 | 공간 복잡도 |
+| :----------: | :---------: | :---------: |
+|      3       |    O(N)     |    O(1)     |
+
+위 방법을 사용해 left를 고정한 후
+
+a의 갯수가 A이상인 최초 인덱스인 rightA와 b의 갯수가 B이상인 최초 인덱스인 rightB를 투 포인터로 구한다.
+
+이후 유요한 경우 rightB - rightA 만큼 정답에 더한다.
+
+```cpp
+auto solution(int size, int a, int b, string& s) {
+  long long answer = 0;
+
+  int left = -1, rightA = -1, rightB = -1;
+  int aCount = 0;
+  int bCount = 0;
+
+  for (; left < size; left++) {
+    if (left >= 0) {
+      if (s[left] == 'a') {
+        aCount--;
+      } else {
+        bCount--;
+      }
+    }
+
+    while (rightA < size && aCount < a) {
+      if (s[rightA + 1] == 'a') {
+        aCount++;
+      }
+      rightA++;
+    }
+    while (rightB < size && bCount < b) {
+      if (s[rightB + 1] == 'b') {
+        bCount++;
+      }
+      rightB++;
+    }
+
+    if (rightB > rightA) {
+      answer += rightB - rightA;
+    }
+  }
+
+  return answer;
+}
+```
+
 ## 고생한 점

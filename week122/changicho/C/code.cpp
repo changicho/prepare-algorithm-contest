@@ -16,42 +16,36 @@
 using namespace std;
 
 auto solution(int size, int a, int b, string& s) {
-  vector<int> prefixSumA(size, 0);
-  vector<int> prefixSumB(size, 0);
-
-  if (s[0] == 'a') {
-    prefixSumA[0] = 1;
-  } else {
-    prefixSumB[0] = 1;
-  }
-  for (int i = 1; i < size; i++) {
-    prefixSumA[i] = prefixSumA[i - 1] + (s[i] == 'a');
-    prefixSumB[i] = prefixSumB[i - 1] + (s[i] == 'b');
-  }
-
   long long answer = 0;
 
-  for (int left = 0; left < size; left++) {
-    int needA = a;
-    int needB = b;
-    // add prefix of 0 ~ (left-1)
-    if (left > 0) {
-      needA += prefixSumA[left - 1];
-      needB += prefixSumB[left - 1];
+  int left = -1, rightA = -1, rightB = -1;
+  int aCount = 0;
+  int bCount = 0;
+
+  for (; left < size; left++) {
+    if (left >= 0) {
+      if (s[left] == 'a') {
+        aCount--;
+      } else {
+        bCount--;
+      }
     }
 
-    // find left ~ right
-    // that right part remain 'a'
-    // [] is right part
-    // xxxxxxb[aaaa...]
-    int idx1 = lower_bound(prefixSumA.begin(), prefixSumA.end(), needA) -
-               prefixSumA.begin();
-    int idx2 = lower_bound(prefixSumB.begin(), prefixSumB.end(), needB) -
-               prefixSumB.begin();
+    while (rightA < size && aCount < a) {
+      if (s[rightA + 1] == 'a') {
+        aCount++;
+      }
+      rightA++;
+    }
+    while (rightB < size && bCount < b) {
+      if (s[rightB + 1] == 'b') {
+        bCount++;
+      }
+      rightB++;
+    }
 
-    // count idx1 ~ idx2 cases
-    if (idx1 < idx2) {
-      answer += (idx2 - idx1);
+    if (rightB > rightA) {
+      answer += rightB - rightA;
     }
   }
 
