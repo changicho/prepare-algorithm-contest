@@ -21,20 +21,20 @@ auto solution(int size, int k, vector<int>& nums) {
     priority[nums[i]] = i;
   }
 
-  priority_queue<pair<int, int>> pq;
-  for (int i = 1; i <= size; i++) {
-    pq.push({priority[i], i});
-    if (pq.size() > k) {
-      pq.pop();
-    }
+  vector<vector<int>> candidates(size + 1);
+  for (int num = 1; num <= size; num++) {
+    candidates[priority[num] + 1].push_back(num);
   }
 
   vector<int> answer;
-  for (int i = 0; i < k; i++) {
-    answer.push_back(pq.top().second);
-    pq.pop();
+  for (int i = 0; i <= size && answer.size() < k; i++) {
+    for (int& candidate : candidates[i]) {
+      answer.push_back(candidate);
+      if (answer.size() == k) {
+        break;
+      }
+    }
   }
-  reverse(answer.begin(), answer.end());
 
   return answer;
 }
