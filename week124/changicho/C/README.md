@@ -72,6 +72,8 @@ b[i] == nums[i] - (nums[i] - nums[0]) * y / (y - x)
 
 이 때 nums[0]은 nums의 최소값이 된다.
 
+만약 분자를 분모로 나눴을 때 나누어 떨어지지 않는 경우 정답이 없는 경우이므로 -1을 반환한다.
+
 ```cpp
 long long solution(int size, vector<long long>& nums, int x, int y) {
   long long minimum = *min_element(nums.begin(), nums.end());
