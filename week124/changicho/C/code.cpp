@@ -23,7 +23,6 @@ long long solution(int size, vector<long long>& nums, int x, int y) {
   // (nums[i] - b[i]) * x + b[i] * y = (nums[0] - b[0]) * x + b[0] * y
   // b[i] = b[0] - (nums[i] - nums[0]) * x / (y - x)
 
-  // b[i] = nums[0] - (nums[i] - nums[0]) * x / (y - x)
   // b[i] = nums[i] - (nums[i] - nums[0]) * y / (y - x)
   for (int i = 0; i < size; i++) {
     long long vs = (nums[i] - minimum) * y;
@@ -37,7 +36,8 @@ long long solution(int size, vector<long long>& nums, int x, int y) {
     if (minor > nums[i]) {
       return -1;
     }
-    sum += (nums[i] - minor);
+    long long b = nums[i] - minor;
+    sum += b;
   }
   return sum;
 }
