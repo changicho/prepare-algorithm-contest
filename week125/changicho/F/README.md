@@ -161,3 +161,7 @@ long long solution(string& s) {
 ```
 
 ## 고생한 점
+
+페르마의 소정리를 이용한 이항계수를 구하는 문제
+
+[백준 - 이항 계수 3](https://www.acmicpc.net/problem/11401)
