@@ -23,27 +23,27 @@ struct Goal {
 auto solution(int size, int h, vector<Goal>& goals) {
   bool answer = true;
 
-  int previousTime = 0;
-  long long currentLow = h;
-  long long currentHigh = h;
+  int before = 0;
+  long long low = h;
+  long long high = h;
 
   for (Goal& goal : goals) {
-    int timeDiff = goal.time - previousTime;
+    int timeDiff = goal.time - before;
 
-    currentLow -= timeDiff;
-    currentHigh += timeDiff;
+    low -= timeDiff;
+    high += timeDiff;
 
-    bool isOverlap = currentLow <= goal.high && goal.low <= currentHigh;
+    bool isOverlap = low <= goal.high && goal.low <= high;
 
     if (!isOverlap) {
       answer = false;
       break;
     }
 
-    currentLow = max(currentLow, goal.low);
-    currentHigh = min(currentHigh, goal.high);
+    low = max(low, goal.low);
+    high = min(high, goal.high);
 
-    previousTime = goal.time;
+    before = goal.time;
   }
 
   return answer;
