@@ -15,23 +15,17 @@
 
 using namespace std;
 
-long long solution(int size, int k, long long x, vector<long long>& cups) {
-  sort(cups.begin(), cups.end());
+long long solution(int size, int k, long long x, vector<long long>& liquids) {
+  sort(liquids.begin(), liquids.end());
 
-  // prefix sums
-  vector<long long> pref(size + 1, 0);
-  for (int i = 0; i < size; i++) {
-    pref[i + 1] = pref[i] + cups[i];
-  }
-
+  long long sakeSum = 0;
   for (int choosen = 1; choosen <= size; choosen++) {
     int maybeSake = max(0, k - (size - choosen));
     if (maybeSake == 0) continue;
 
-    int start = size - choosen;
-    long long sake = pref[start + maybeSake] - pref[start];
+    sakeSum += liquids[size - choosen];
 
-    if (sake >= x) {
+    if (sakeSum >= x) {
       return choosen;
     }
   }

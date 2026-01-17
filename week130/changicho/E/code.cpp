@@ -82,8 +82,6 @@ struct SegTree {
 long long solution(int size, string& s) {
   long long answer = 0;
 
-  // count(a) - count(b) == diff
-
   vector<int> arr(1e6 + 1, 0);
   arr[DIFF] = 1;
 
@@ -107,9 +105,7 @@ long long solution(int size, string& s) {
     answer += cur;
 
     segTree.update(DIFF + diff, 1);
-    // cout << diff << " " << cur << endl;
   }
-  // cout << endl;
 
   return answer;
 }
