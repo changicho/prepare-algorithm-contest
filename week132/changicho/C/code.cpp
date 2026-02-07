@@ -39,15 +39,16 @@ bool check(long long val, vector<long long>& nums) {
 vector<long long> solution(int size, vector<long long>& nums) {
   vector<long long> answer;
 
-  sort(nums.begin(), nums.end());
+  long long minimum = *min_element(nums.begin(), nums.end());
+  long long maximum = *max_element(nums.begin(), nums.end());
 
   // remain or broke two cases
-  if (check(nums.back(), nums)) {
-    answer.push_back(nums.back());
+  if (check(maximum, nums)) {
+    answer.push_back(maximum);
   }
 
-  if (check(nums.front() + nums.back(), nums)) {
-    answer.push_back(nums.front() + nums.back());
+  if (check(minimum + maximum, nums)) {
+    answer.push_back(minimum + maximum);
   }
 
   return answer;
