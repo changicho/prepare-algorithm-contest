@@ -39,12 +39,6 @@ long long solution(int n, int d, vector<long long>& a, vector<long long>& b) {
     while (!q.empty() && q.front().first + d <= i) {
       q.pop_front();
     }
-
-    // long long cur = 0;
-    // for (auto& [before, count] : q) {
-    //   cur += count;
-    // }
-    // cout << cur << endl;
   }
 
   while (!q.empty()) {

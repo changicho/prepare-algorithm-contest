@@ -55,7 +55,6 @@ long long solution(int m, int a, int b) {
   for (int x = 0; x < m; x++) {
     for (int y = 0; y < m; y++) {
       if (state[x][y] == 2) {
-        // cout << x << "," << y << endl;
         answer++;
       }
     }
