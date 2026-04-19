@@ -43,8 +43,6 @@ bool solution(string& a, string& b) {
   string ac = convert(a);
   string bc = convert(b);
 
-  // cout << a << " " << ac << " / " << b << " " << bc << endl;
-
   bool answer = ac == bc;
 
   return answer;

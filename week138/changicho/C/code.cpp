@@ -31,7 +31,6 @@ int solution(int n, int m, vector<int> a, vector<int> b) {
   while (!q.empty()) {
     int cur = q.front();
     q.pop();
-    // cout << cur << endl;
 
     for (int next : graph[cur]) {
       if (next == -1) continue;

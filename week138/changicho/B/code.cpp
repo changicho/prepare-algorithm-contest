@@ -19,13 +19,13 @@ using namespace std;
 vector<bool> solution(int size, int m, vector<int>& clothes) {
   vector<bool> answer;
 
-  unordered_map<int, int> count;
+  unordered_set<int> us;
   for (int& c : clothes) {
-    count[c]++;
+    us.insert(c);
   }
 
-  answer.push_back(count.size() == size);
-  answer.push_back(count.size() == m);
+  answer.push_back(us.size() == size);
+  answer.push_back(us.size() == m);
 
   return answer;
 }
